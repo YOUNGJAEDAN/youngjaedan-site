@@ -1,6 +1,6 @@
 # 카드 — 영재단 소개 페이지 v1 (태오)
 
-근거: 확정 판 2(관문 1, 2026-11-25) `landing/prototype/` · 기획 메모 `landing/brief.md` · 회의록 `landing/meeting-1/minutes.md`
+근거: 확정 판 2(관문 1, 2026-11-25) [`docs/prototype/v2/`](prototype/v2/) · 기획 메모 [`docs/brief.md`](brief.md) · 회의록 [`docs/meeting-1/minutes.md`](meeting-1/minutes.md)
 레포: `YOUNGJAEDAN/youngjaedan-site`(공개 예외 — 레포는 비공개가 기본, 이 레포만 GitHub Pages 때문에 공개)
 
 **관문 2 없음**: 카드 3장(4장 미만), 비용 0(GitHub Pages 무료·공개 레포), 인프라 변경 없음.
