@@ -23,3 +23,5 @@ jobs:
           node-version: 24
       - name: Build check
         run: node site/src/build.mjs && git diff --exit-code site/index.html
+      - name: Test
+        run: node --test test/**/*.test.ts
