@@ -1,0 +1,2096 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#191919" />
+    <title>영재단 · 소개 (샘플)</title>
+    <style>
+      :root {
+        --bg: #191919;
+        --surface: #202020;
+        --raised: #2a2a2a;
+        --line: #3a3a3a;
+        --control: #969089;
+        --text: #f7f6f3;
+        --muted: #b0b0b0;
+        --accent: #d4b895;
+        --radius: 10px;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+          "Noto Sans KR", "Malgun Gothic", sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-text-size-adjust: 100%;
+        word-break: keep-all;
+      }
+      a {
+        color: var(--accent);
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .skip {
+        position: absolute;
+        left: 8px;
+        top: -60px;
+        background: var(--accent);
+        color: var(--bg);
+        padding: 10px 14px;
+        border-radius: 6px;
+        z-index: 50;
+        font-weight: 700;
+      }
+      .skip:focus {
+        top: 8px;
+      }
+      button,
+      .btn {
+        font: inherit;
+        color: inherit;
+        min-height: 44px;
+        min-width: 44px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 16px;
+        text-decoration: none;
+        border: 1px solid var(--control);
+        background: transparent;
+        color: var(--text);
+        font-weight: 600;
+      }
+      .btn:hover {
+        background: var(--raised);
+      }
+      .btn-primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg);
+        font-weight: 700;
+      }
+      .btn-primary:hover {
+        background: #e0c8a8;
+      }
+      .btn[aria-pressed="true"] {
+        background: var(--raised);
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      /* 머리띠 */
+      .bar {
+        height: 56px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .logo {
+        margin: 0;
+        line-height: 0;
+      }
+      .logo img {
+        height: 30px;
+        width: auto;
+        display: block;
+      }
+      .bar-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .badge {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--accent);
+        border: 1px dashed var(--accent);
+        border-radius: 999px;
+        padding: 3px 10px;
+        white-space: nowrap;
+      }
+      .bar .btn {
+        padding: 0 12px;
+        font-size: 14px;
+      }
+      /* 첫 화면 */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 56px);
+        height: calc(100svh - 56px);
+        min-height: 560px;
+        padding: 0 16px 16px;
+      }
+      .hero-text {
+        padding-top: 4px;
+      }
+      .sub {
+        margin: 0;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .philo {
+        margin: 6px 0 4px;
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: 750;
+        letter-spacing: -0.01em;
+      }
+      .philo .star {
+        color: var(--accent);
+      }
+      .teamline {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .stage {
+        position: relative;
+        flex: 1;
+        min-height: 300px;
+        margin: 8px -16px 8px;
+        overflow: hidden;
+        touch-action: pan-y;
+      }
+      .stage canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        /* 바닥 가장자리가 페이지 바탕(#191919)으로 사라지게 */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+      }
+      @media (min-width: 960px) {
+        .stage canvas {
+          -webkit-mask-image: radial-gradient(ellipse 50% 58% at 50% 52%, #000 70%, transparent 100%);
+          mask-image: radial-gradient(ellipse 50% 58% at 50% 52%, #000 70%, transparent 100%);
+        }
+      }
+      .stage.is-3d {
+        cursor: grab;
+      }
+      .stage.is-3d.dragging {
+        cursor: grabbing;
+      }
+      .pins,
+      .tiles {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .pins li {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .pin {
+        position: absolute;
+        transform: translate(-50%, -100%);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        padding: 0 0 2px;
+        border-radius: 12px;
+      }
+      .pin:hover .pin-name {
+        border-color: var(--accent);
+      }
+      .pin:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+        background: #d4b8951a;
+      }
+      .pin-name {
+        display: inline-block;
+        font-size: 13px;
+        line-height: 1;
+        font-weight: 650;
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: #191919e6;
+        border: 1px solid var(--line);
+        color: var(--text);
+        white-space: nowrap;
+      }
+      .pin-name.owner {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .stage-status {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: 6px;
+        margin: 0;
+        font-size: 13px;
+        color: var(--muted);
+        text-align: center;
+        pointer-events: none;
+      }
+      .view3d {
+        position: absolute;
+        left: 50%;
+        bottom: 8px;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        background: #191919e6;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .view3d .btn {
+        padding: 0 12px;
+        font-size: 14px;
+        border-color: transparent;
+      }
+      .view3d .btn[aria-pressed="true"] {
+        border-color: var(--accent);
+      }
+      .view3d[hidden],
+      .tiles[hidden],
+      .pins[hidden] {
+        display: none;
+      }
+      /* WebGL이 없을 때: 같은 12명을 그림 없이 */
+      .tiles {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-content: center;
+        gap: 10px 4px;
+        padding: 8px 12px;
+      }
+      .tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        background: transparent;
+        border: 1px solid transparent;
+        padding: 8px 2px;
+        width: 100%;
+      }
+      .tile:hover {
+        border-color: var(--line);
+      }
+      .face {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--skin);
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 0 0 0 2px #00000022;
+      }
+      .face::before {
+        content: "";
+        position: absolute;
+        left: -4px;
+        right: -4px;
+        top: -18px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--hair);
+      }
+      .face::after {
+        content: "";
+        position: absolute;
+        left: 13px;
+        top: 24px;
+        width: 4px;
+        height: 6px;
+        border-radius: 3px;
+        background: #241b19;
+        box-shadow: 16px 0 0 #241b19;
+      }
+      .tile.owner .face {
+        box-shadow: 0 0 0 2px var(--accent);
+      }
+      .tile .pin-name {
+        font-size: 13px;
+      }
+      .hero-actions {
+        display: grid;
+        gap: 8px;
+      }
+      .hero-actions .btn-primary {
+        min-height: 50px;
+        font-size: 16px;
+      }
+      .hero-actions .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .hero-actions .row:has(#open3d[hidden]) {
+        grid-template-columns: 1fr;
+      }
+      #list:focus {
+        outline: none;
+      }
+      #review[open] {
+        display: flex;
+        flex-direction: column;
+      }
+      #review .card-body {
+        flex: 1;
+        min-height: 0;
+      }
+      /* 아래 칸들 */
+      section.block {
+        padding: 40px 16px 8px;
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      h2 {
+        font-size: 20px;
+        margin: 0 0 12px;
+        letter-spacing: -0.01em;
+      }
+      h2 .star {
+        color: var(--accent);
+        font-size: 0.8em;
+        margin-right: 6px;
+      }
+      .how p {
+        margin: 0 0 10px;
+      }
+      .approvals {
+        list-style: none;
+        padding: 0;
+        margin: 4px 0 14px;
+        display: grid;
+        gap: 8px;
+      }
+      .approvals li {
+        display: grid;
+        grid-template-columns: 32px 1fr;
+        align-items: center;
+        gap: 10px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 10px 12px;
+      }
+      .approvals .n {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--raised);
+        color: var(--accent);
+        font-weight: 750;
+      }
+      .approvals b {
+        display: block;
+      }
+      .approvals span {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .people {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid var(--line);
+      }
+      .people button {
+        width: 100%;
+        text-align: left;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 2px 12px;
+        align-items: center;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        padding: 12px 4px;
+      }
+      .people button:hover {
+        background: var(--surface);
+      }
+      .people .nm {
+        font-weight: 700;
+      }
+      .people .rl {
+        color: var(--muted);
+        font-weight: 500;
+        margin-left: 6px;
+        font-size: 14px;
+      }
+      .people .ds {
+        grid-column: 1 / -1;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .kind {
+        font-size: 12px;
+        font-weight: 650;
+        border-radius: 999px;
+        padding: 2px 9px;
+        border: 1px solid var(--control);
+        color: var(--text);
+        white-space: nowrap;
+      }
+      .kind.human {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .empty {
+        background: var(--surface);
+        border: 1px dashed var(--control);
+        border-radius: var(--radius);
+        padding: 18px 16px;
+      }
+      .empty b {
+        font-size: 18px;
+      }
+      .empty p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      footer {
+        max-width: 760px;
+        margin: 32px auto 0;
+        padding: 16px 16px 96px;
+        color: var(--muted);
+        font-size: 13px;
+        border-top: 1px solid var(--line);
+      }
+      /* 카드·리뷰 대화상자 */
+      dialog {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 0;
+        width: min(420px, calc(100vw - 32px));
+        max-height: calc(100vh - 32px);
+      }
+      dialog::backdrop {
+        background: #000000b3;
+      }
+      .card-body {
+        padding: 20px 20px 16px;
+      }
+      .card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .card-body h2 {
+        margin: 10px 0 2px;
+        font-size: 26px;
+      }
+      .card-role {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-weight: 650;
+      }
+      .card-does {
+        margin: 0 0 16px;
+      }
+      .src {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .dlg-foot {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 12px 20px 20px;
+      }
+      #review {
+        width: min(560px, calc(100vw - 24px));
+      }
+      #review .card-body {
+        overflow: auto;
+      }
+      .changes {
+        margin: 6px 0 16px;
+        padding-left: 18px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      fieldset {
+        border: 0;
+        margin: 0 0 14px;
+        padding: 0;
+      }
+      legend {
+        font-weight: 650;
+        margin-bottom: 6px;
+        padding: 0;
+      }
+      .seg {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+      }
+      .seg label {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border: 1px solid var(--control);
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .seg input {
+        position: absolute;
+        opacity: 0;
+        inset: 0;
+        margin: 0;
+        cursor: pointer;
+      }
+      .seg input:checked + span {
+        color: var(--bg);
+      }
+      .seg label:has(input:checked) {
+        background: var(--accent);
+        border-color: var(--accent);
+        font-weight: 700;
+      }
+      .seg label:has(input:focus-visible) {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      textarea {
+        width: 100%;
+        font: inherit;
+        font-size: 15px;
+        color: var(--text);
+        background: var(--bg);
+        border: 1px solid var(--control);
+        border-radius: 8px;
+        padding: 10px;
+        min-height: 64px;
+      }
+      .copy-out {
+        margin-top: 10px;
+        font-size: 13px;
+        min-height: 120px;
+      }
+      .copy-status {
+        min-height: 20px;
+        margin: 6px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      /* PC */
+      @media (min-width: 960px) {
+        .bar {
+          height: 64px;
+          padding: 0 32px;
+        }
+        .logo img {
+          height: 34px;
+        }
+        .hero {
+          display: grid;
+          grid-template-columns: minmax(340px, 400px) 1fr;
+          grid-template-rows: 1fr auto;
+          grid-template-areas: "text stage" "actions stage";
+          column-gap: 24px;
+          height: calc(100vh - 64px);
+          min-height: 600px;
+          padding: 0 32px 24px;
+        }
+        .hero-text {
+          grid-area: text;
+          align-self: center;
+        }
+        .philo {
+          font-size: 34px;
+          margin: 10px 0 10px;
+        }
+        .teamline {
+          font-size: 16px;
+        }
+        .stage {
+          grid-area: stage;
+          margin: 0;
+          border-radius: 16px;
+        }
+        .hero-actions {
+          grid-area: actions;
+          padding-bottom: 8px;
+        }
+        .tiles {
+          grid-template-columns: repeat(6, 1fr);
+        }
+        section.block {
+          padding-top: 56px;
+        }
+      }
+
+      /* ---------- 판 2: 여백과 글자 위계로 정리 (꽉 찬 버튼·알약 배지·상자 테두리 걷어냄) ---------- */
+      .badge {
+        border: 0;
+        padding: 0;
+        border-radius: 0;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 13px;
+      }
+      .link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 4px;
+        background: none;
+        border: 0;
+        border-radius: 4px;
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: underline;
+        text-decoration-color: #ffffff38;
+        text-underline-offset: 6px;
+      }
+      .link:hover {
+        color: var(--text);
+        text-decoration-color: currentColor;
+      }
+      .link[aria-pressed="true"] {
+        color: var(--accent);
+        text-decoration-color: var(--accent);
+      }
+      .bar {
+        height: 64px;
+        padding: 0 24px;
+      }
+      .logo img {
+        height: 28px;
+      }
+      .bar-right {
+        gap: 14px;
+      }
+      .bar .link {
+        font-size: 13px;
+      }
+      .hero {
+        height: calc(100vh - 64px);
+        height: calc(100svh - 64px);
+        padding: 0 24px 20px;
+      }
+      .hero-text {
+        padding-top: 18px;
+      }
+      .sub {
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        font-weight: 500;
+      }
+      .philo {
+        margin: 14px 0 10px;
+        font-size: 24px;
+        line-height: 1.45;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .stage {
+        margin: 12px -24px 4px;
+      }
+      .hero-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 48px;
+        padding: 0 2px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 17px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--accent);
+      }
+      .cta .arrow {
+        color: var(--accent);
+        transition: transform 0.2s;
+      }
+      .cta:hover .arrow {
+        transform: translateX(4px);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cta .arrow {
+          transition: none;
+        }
+      }
+      .quiet {
+        display: flex;
+        gap: 18px;
+        margin-left: -4px;
+      }
+      .pin-name {
+        background: none;
+        border: 0;
+        padding: 4px 2px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        text-shadow: 0 1px 4px #000, 0 0 2px #000;
+      }
+      .pin-name.owner {
+        color: var(--accent);
+      }
+      .pin:hover .pin-name {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      .tile,
+      .tile:hover {
+        border-color: transparent;
+      }
+      .view3d {
+        gap: 14px;
+        padding: 0 8px;
+        background: none;
+        border: 0;
+      }
+      .view3d .link {
+        font-size: 14px;
+        text-shadow: 0 1px 4px #000;
+      }
+      section.block {
+        padding: 96px 24px 8px;
+      }
+      h2 {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--muted);
+        margin: 0 0 20px;
+      }
+      h2 .star {
+        font-size: 0.85em;
+        margin-right: 8px;
+      }
+      .how p {
+        font-size: 17px;
+        line-height: 1.75;
+        margin: 0 0 14px;
+      }
+      .approvals {
+        margin: 6px 0 22px;
+        gap: 4px;
+      }
+      .approvals li {
+        grid-template-columns: 28px 1fr;
+        background: none;
+        border: 0;
+        border-radius: 0;
+        padding: 8px 0;
+        align-items: baseline;
+      }
+      .approvals .n {
+        width: auto;
+        height: auto;
+        display: inline;
+        background: none;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+      .approvals b {
+        font-weight: 600;
+        display: inline;
+        margin-right: 8px;
+      }
+      .people {
+        border-top: 1px solid #2c2c2c;
+      }
+      .people button {
+        border-bottom: 1px solid #2c2c2c;
+        padding: 16px 0;
+      }
+      .people .nm {
+        font-weight: 600;
+      }
+      .kind {
+        border: 0;
+        padding: 0;
+        border-radius: 0;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 13px;
+      }
+      .kind.human {
+        color: var(--accent);
+      }
+      .empty {
+        background: none;
+        border: 0;
+        padding: 0;
+      }
+      .empty b {
+        font-size: 17px;
+        font-weight: 600;
+      }
+      footer {
+        border-top: 0;
+        margin-top: 72px;
+      }
+      dialog {
+        border: 0;
+        border-radius: 14px;
+      }
+      .card-body {
+        padding: 28px 28px 8px;
+      }
+      .card-body h2 {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--text);
+        margin: 16px 0 4px;
+      }
+      .card-role {
+        font-weight: 500;
+        margin-bottom: 16px;
+      }
+      .dlg-foot {
+        padding: 8px 24px 20px;
+        align-items: center;
+      }
+      @media (min-width: 960px) {
+        .bar {
+          padding: 0 48px;
+        }
+        .hero {
+          padding: 0 48px 32px;
+          grid-template-columns: minmax(360px, 420px) 1fr;
+          column-gap: 40px;
+        }
+        .philo {
+          font-size: 38px;
+          line-height: 1.35;
+          margin: 18px 0 16px;
+        }
+        .hero-actions {
+          padding-bottom: 12px;
+        }
+        .cta {
+          font-size: 18px;
+        }
+        section.block {
+          padding-top: 128px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#list">팀 목록으로 건너뛰기</a>
+    <header class="bar">
+      <h1 class="logo"><img src="data:image/png;base64,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" alt="영재단" width="88" height="32" /></h1>
+      <div class="bar-right">
+        <span class="badge" id="ver-badge"></span>
+        <button type="button" class="link" id="review-open" aria-haspopup="dialog">리뷰</button>
+      </div>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="philo">
+        <div class="hero-text">
+          <p class="sub" id="sub" lang="en"></p>
+          <p class="philo" id="philo"></p>
+          <p class="teamline" id="teamline"></p>
+        </div>
+        <div class="stage" id="stage">
+          <canvas id="scene" aria-hidden="true"></canvas>
+          <p class="stage-status" id="stage-status" aria-live="polite"></p>
+          <ul class="pins" id="pins" aria-label="팀 12명, 누르면 카드가 열립니다"></ul>
+          <ul class="tiles" id="tiles" aria-label="팀 12명, 누르면 카드가 열립니다" hidden></ul>
+          <div class="view3d" id="view3d" role="group" aria-label="3D 보기 방향" hidden>
+            <button type="button" class="link" data-az="0" aria-pressed="true">정면</button>
+            <button type="button" class="link" data-az="0.61" aria-pressed="false">3/4</button>
+            <button type="button" class="link" data-az="3.14159" aria-pressed="false">뒤</button>
+            <button type="button" class="link" id="close3d">정지 그림</button>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a class="cta" id="gh" href="https://github.com/YOUNGJAEDAN" rel="noopener"
+            ><span id="gh-text"></span><span class="arrow" aria-hidden="true">→</span></a
+          >
+          <div class="quiet">
+            <button type="button" class="link" id="open3d">3D로 보기</button>
+            <a class="link" href="#list" id="open-list">목록으로 보기</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="block how" id="how" aria-labelledby="how-h">
+        <h2 id="how-h"><span class="star" aria-hidden="true">✦</span><span id="how-title"></span></h2>
+        <p id="how-1"></p>
+        <p id="how-2"></p>
+        <ol class="approvals" id="approvals"></ol>
+        <p id="how-3"></p>
+      </section>
+
+      <section class="block" id="list" aria-labelledby="list-h" tabindex="-1">
+        <h2 id="list-h"><span class="star" aria-hidden="true">✦</span>팀 목록</h2>
+        <ul class="people" id="people"></ul>
+      </section>
+
+      <section class="block" id="projects" aria-labelledby="proj-h">
+        <h2 id="proj-h"><span class="star" aria-hidden="true">✦</span>프로젝트</h2>
+        <div id="proj-body"></div>
+      </section>
+
+      <footer id="foot"></footer>
+    </main>
+
+    <dialog id="card" aria-labelledby="card-name" aria-describedby="card-does">
+      <div class="card-body">
+        <div class="card-top">
+          <span class="kind" id="card-kind"></span>
+          <span class="badge">샘플</span>
+        </div>
+        <h2 id="card-name"></h2>
+        <p class="card-role" id="card-role"></p>
+        <p class="card-does" id="card-does"></p>
+        <p class="src">출처: 샘플 데이터 · "하는 일"은 초안</p>
+      </div>
+      <div class="dlg-foot">
+        <button type="button" class="link" id="card-close">닫기</button>
+      </div>
+    </dialog>
+
+    <dialog id="review" aria-labelledby="review-h">
+      <div class="card-body">
+        <div class="card-top">
+          <h2 id="review-h" style="margin: 0; font-size: 20px; color: var(--text); letter-spacing: 0"></h2>
+          <span class="badge">샘플</span>
+        </div>
+        <p class="src" style="margin-top: 10px">이번 판에서 바뀐 것</p>
+        <ul class="changes" id="changes"></ul>
+        <form id="review-form"></form>
+        <label for="memo" style="font-weight: 650; display: block; margin-bottom: 6px">메모</label>
+        <textarea id="memo" placeholder="한 줄로 남겨 주세요"></textarea>
+        <label class="sr" for="copy-out">복사될 피드백 문구</label>
+        <textarea class="copy-out" id="copy-out" readonly></textarea>
+        <p class="copy-status" id="copy-status" aria-live="polite"></p>
+      </div>
+      <div class="dlg-foot">
+        <button type="button" class="link" id="review-close">닫기</button>
+        <button type="button" class="btn" id="copy-btn">피드백 문구 복사</button>
+      </div>
+    </dialog>
+
+    <script type="application/json" id="mock-data">{"sample":true,"version":2,"asOf":"2026-11-25","source":"샘플 데이터 · 판 2 · 직원 명단은 운영 앱 목업(staff), 외형은 Codex 캐릭터 원본","site":{"logo":"영재단","logoMark":"✦","subtitle":"YOUNGJAEDAN","philosophy":"제한된 자원으로 좋은 팀을 구성하고 운영하는 회사","teamLine":"대표 1명과 AI 직원 11명"},"github":{"org":"YOUNGJAEDAN","label":"GitHub에서 보기"},"people":[{"id":"s-cos","name":"서연","role":"인사·접수","kind":"ai","does":"대표의 업무 지시를 받아 질문·작은 변경·새 기능으로 나눕니다.","look":{"hair":"#2b1d16","style":"bun","skin":"#f2d4bf","lash":true}},{"id":"s-fin","name":"수현","role":"총무","kind":"ai","does":"구독 사용량과 비용 기록을 모아 정리합니다.","look":{"hair":"#3b2a20","style":"perm","skin":"#edc9ad","face":"round"}},{"id":"s-plan","name":"지우","role":"기획자","kind":"ai","does":"아이디어 단계에서 대표와 이야기하고 기획 메모 한 장으로 정리합니다.","look":{"hair":"#2a1f1a","style":"bob","skin":"#f0d0b8","lash":true}},{"id":"s-design","name":"예린","role":"프로덕트 디자이너","kind":"ai","does":"눌러 볼 수 있는 화면 판을 만들어 대표와 방향을 정합니다.","look":{"hair":"#6b3f2a","style":"long","skin":"#f3d6c2","lash":true,"wink":true}},{"id":"s-lead","name":"태오","role":"테크 리드","kind":"ai","does":"확정된 화면을 빌더가 맡을 개발 카드 묶음으로 나눕니다.","look":{"hair":"#151515","style":"short","skin":"#e3bd9d","acc":"beard","brow":"thick"}},{"id":"s-b1","name":"도윤","role":"빌더","kind":"ai","does":"개발 카드를 한 장씩 맡아 코드를 쓰고 PR을 올립니다.","look":{"hair":"#5a3a24","style":"curly","skin":"#e6c3a3","acc":"glasses-round","brow":"thick"}},{"id":"s-b2","name":"이안","role":"빌더","kind":"ai","does":"개발 카드를 한 장씩 맡아 코드를 쓰고 PR을 올립니다.","look":{"hair":"#2a1d16","style":"ponytail-low","skin":"#c99872","body":"big","brow":"thick"}},{"id":"s-b3","name":"하린","role":"빌더","kind":"ai","does":"개발 카드를 한 장씩 맡아 코드를 쓰고 PR을 올립니다.","look":{"hair":"#161210","style":"braid","skin":"#f2d2bb","lash":true}},{"id":"s-ops","name":"건우","role":"데브옵스","kind":"ai","does":"인프라와 배포·되돌리기를 맡습니다.","look":{"hair":"#d9b46a","style":"sidepart","skin":"#ecc9ab","iris":"#3f5a6b"}},{"id":"s-verify","name":"민재","role":"검증","kind":"ai","does":"올라온 PR을 검토하고 CI 결과로 확인합니다.","look":{"hair":"#1d1714","style":"sidepart","skin":"#e6c2a3","acc":"glasses-square"}},{"id":"s-sec","name":"유나","role":"보안","kind":"ai","does":"위험할 수 있는 변경을 보안 관점에서 검토합니다.","look":{"hair":"#2a1c15","style":"ponytail-high","skin":"#c58f6b","lash":true}},{"id":"owner","name":"대표","role":"운영자","kind":"human","does":"방향을 정하고 결재 세 번을 합니다. 나머지는 AI 직원이 합니다.","look":{"hair":"#1b1714","style":"sidepart","skin":"#efcdb3","brow":"thick"}}],"howWeWork":{"title":"어떻게 일하나","lines":["대표가 아이디어를 말하면 AI 직원들이 기획부터 검토까지 이어 갑니다.","대표는 결재를 세 번만 합니다.","결재 사이의 일은 AI 직원들이 문서로 주고받으며 진행합니다."],"approvals":[{"n":1,"name":"프로토타입 확정","what":"눌러 본 화면으로 방향을 정합니다"},{"n":2,"name":"카드 묶음","what":"개발 카드로 나눈 작업을 승인합니다"},{"n":3,"name":"결과 확인","what":"검토를 마친 결과를 확인합니다"}]},"projects":[],"projectsEmpty":"만드는 중","projectsEmptyNote":"공개 레포가 생기면 여기에 적습니다.","review":{"feature":"영재단 소개 페이지","version":2,"changes":["꽉 찬 금색 버튼과 나란한 테두리 버튼을 걷고, GitHub는 글자+화살표 링크 하나로 두었습니다.","3D·목록·리뷰는 조용한 글자 링크로, 알약 배지와 상자 테두리는 뺐습니다(샘플 표시는 글자로 남김).","여백을 넓히고 제목 크기·굵기로만 위계를 잡았습니다. 판 1에서 좋았던 내용과 동작은 그대로입니다."],"points":[{"id":"p1","text":"버튼·배지를 걷어낸 첫 화면이 여유 있고 깔끔해 보이나"},{"id":"p2","text":"GitHub 링크(글자+화살표)가 주 행동으로 충분히 눈에 띄나"},{"id":"p3","text":"3D로 보기·목록 링크를 조용하게 둔 것(찾기 쉬운가)"},{"id":"p4","text":"아래 칸(어떻게 일하나·팀 목록·프로젝트)의 상자를 뺀 정리"}]}}</script>
+    <script>
+      "use strict";
+      const M = JSON.parse(document.getElementById("mock-data").textContent);
+      const $ = (id) => document.getElementById(id);
+      const PEOPLE = M.people;
+      const byId = Object.fromEntries(PEOPLE.map((p) => [p.id, p]));
+      const kindLabel = (p) => (p.kind === "human" ? "사람" : "AI 직원");
+      const pinLabel = (p) => (p.kind === "human" ? p.name + " ✦" : p.name);
+      const roleLine = (p) => (p.kind === "human" ? p.role + " · 사람" : p.role);
+      const ariaFor = (p) => `${p.name}, ${roleLine(p)}${p.kind === "human" ? "" : ", AI 직원"}. 카드 열기`;
+
+      /* ---------- 글 채우기 ---------- */
+      $("sub").textContent = M.site.subtitle;
+      $("philo").innerHTML = "";
+      $("philo").append(M.site.philosophy);
+      $("teamline").textContent = M.site.teamLine;
+      $("gh-text").textContent = M.github.label + " · " + M.github.org;
+      $("ver-badge").textContent = `샘플 · 판 ${M.version}`;
+      $("review-h").textContent = `리뷰 · 판 ${M.version}`;
+      document.title = `영재단 · 소개 (샘플 · 판 ${M.version})`;
+      $("how-title").textContent = M.howWeWork.title;
+      $("how-1").textContent = M.howWeWork.lines[0];
+      $("how-2").textContent = M.howWeWork.lines[1];
+      $("how-3").textContent = M.howWeWork.lines[2];
+      for (const a of M.howWeWork.approvals) {
+        const li = document.createElement("li");
+        li.innerHTML = `<span class="n" aria-hidden="true"></span><div><b></b><span></span></div>`;
+        li.querySelector(".n").textContent = a.n;
+        li.querySelector("b").textContent = `결재 ${a.n} · ${a.name}`;
+        li.querySelector("div span").textContent = a.what;
+        $("approvals").append(li);
+      }
+      for (const p of PEOPLE) {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button";
+        b.dataset.person = p.id;
+        b.innerHTML = `<span><span class="nm"></span><span class="rl"></span></span><span class="kind"></span><span class="ds"></span>`;
+        b.querySelector(".nm").textContent = pinLabel(p);
+        b.querySelector(".rl").textContent = roleLine(p);
+        const k = b.querySelector(".kind");
+        k.textContent = kindLabel(p);
+        if (p.kind === "human") k.classList.add("human");
+        b.querySelector(".ds").textContent = p.does;
+        li.append(b);
+        $("people").append(li);
+      }
+      if (M.projects.length === 0) {
+        $("proj-body").innerHTML = `<div class="empty"><b></b><p></p></div>`;
+        $("proj-body").querySelector("b").textContent = M.projectsEmpty;
+        $("proj-body").querySelector("p").textContent = M.projectsEmptyNote;
+      } else {
+        const ul = document.createElement("ul");
+        ul.className = "people";
+        for (const pr of M.projects) {
+          const li = document.createElement("li");
+          li.textContent = pr.name;
+          ul.append(li);
+        }
+        $("proj-body").append(ul);
+      }
+      $("foot").textContent = `출처: 샘플 데이터 · 판 ${M.version} · ${M.asOf} · 검색 노출 끔(noindex)`;
+
+      /* ---------- 카드 ---------- */
+      const card = $("card");
+      let cardReturn = null;
+      function openCard(id, from) {
+        const p = byId[id];
+        if (!p) return;
+        $("card-kind").textContent = kindLabel(p);
+        $("card-kind").className = "kind" + (p.kind === "human" ? " human" : "");
+        $("card-name").textContent = pinLabel(p);
+        $("card-role").textContent = roleLine(p);
+        $("card-does").textContent = p.does;
+        cardReturn = from || document.activeElement;
+        if (!card.open) card.showModal();
+        $("card-close").focus();
+        state.card = id;
+        writeHash();
+      }
+      card.addEventListener("close", () => {
+        state.card = null;
+        writeHash();
+        if (cardReturn && document.contains(cardReturn)) cardReturn.focus({ preventScroll: true });
+      });
+      $("card-close").onclick = () => card.close();
+      card.addEventListener("click", (e) => {
+        if (e.target === card) card.close();
+      });
+      document.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-person]");
+        if (!b) return;
+        if (suppressClick) {
+          e.preventDefault();
+          return;
+        }
+        openCard(b.dataset.person, b);
+      });
+
+      /* ---------- 주소 해시: #card=s-design, #3d(&view=front|34|back), #list, #review, #nogl ---------- */
+      const state = { card: null, three: false, list: false };
+      function parseHash() {
+        const out = {};
+        for (const part of location.hash.slice(1).split("&")) {
+          if (!part) continue;
+          const [k, v] = part.split("=");
+          out[decodeURIComponent(k)] = v === undefined ? true : decodeURIComponent(v);
+        }
+        return out;
+      }
+      const H0 = parseHash();
+      const forceNoGL = !!H0.nogl;
+      function writeHash() {
+        const parts = [];
+        if (forceNoGL) parts.push("nogl");
+        if (state.three) parts.push("3d");
+        if (state.card) parts.push("card=" + state.card);
+        const h = parts.length ? "#" + parts.join("&") : location.pathname + location.search;
+        if (("#" + location.hash.slice(1)) !== h) history.replaceState(null, "", h);
+      }
+      function applyHash() {
+        const h = parseHash();
+        if (h["3d"] && can3d) {
+          enter3d(false);
+          const v = { front: 0, "34": 0.61, back: PI }[h.view];
+          if (v !== undefined) {
+            az = azTarget = v;
+            setPressed(v);
+          }
+        }
+        else if (!h["3d"] && state.three) exit3d(false);
+        if (h.list) {
+          $("list").scrollIntoView({ block: "start" });
+          $("list").focus({ preventScroll: true });
+        }
+        if (typeof h.card === "string" && byId[h.card]) openCard(h.card);
+        if (h.review) openReview();
+      }
+      addEventListener("hashchange", applyHash);
+      $("open-list").addEventListener("click", (e) => {
+        e.preventDefault();
+        $("list").scrollIntoView({ block: "start" });
+        $("list").focus({ preventScroll: true });
+      });
+
+      /* ---------- 리뷰 ---------- */
+      const R = M.review;
+      for (const c of R.changes) {
+        const li = document.createElement("li");
+        li.textContent = c;
+        $("changes").append(li);
+      }
+      R.points.forEach((pt, i) => {
+        const fs = document.createElement("fieldset");
+        const lg = document.createElement("legend");
+        lg.textContent = `${i + 1}. ${pt.text}`;
+        fs.append(lg);
+        const seg = document.createElement("div");
+        seg.className = "seg";
+        for (const opt of ["좋음", "바꿀 것", "모르겠음"]) {
+          const lb = document.createElement("label");
+          lb.innerHTML = `<input type="radio" /><span></span>`;
+          const inp = lb.querySelector("input");
+          inp.name = pt.id;
+          inp.value = opt;
+          lb.querySelector("span").textContent = opt;
+          seg.append(lb);
+        }
+        fs.append(seg);
+        $("review-form").append(fs);
+      });
+      function feedbackText() {
+        const f = $("review-form");
+        const lines = [`[${R.feature} · 판 ${R.version} 피드백]`];
+        R.points.forEach((pt, i) => {
+          const v = f.querySelector(`input[name="${pt.id}"]:checked`);
+          lines.push(`${i + 1}. ${pt.text} — ${v ? v.value : "(고르지 않음)"}`);
+        });
+        lines.push("메모: " + ($("memo").value.trim().replace(/\s+/g, " ") || ""));
+        return lines.join("\n");
+      }
+      const refreshOut = () => ($("copy-out").value = feedbackText());
+      $("review-form").addEventListener("change", refreshOut);
+      $("memo").addEventListener("input", refreshOut);
+      function openReview() {
+        refreshOut();
+        if (!$("review").open) $("review").showModal();
+      }
+      $("review-open").onclick = openReview;
+      $("review-close").onclick = () => $("review").close();
+      $("copy-btn").onclick = async () => {
+        const text = feedbackText();
+        $("copy-out").value = text;
+        let ok = false;
+        try {
+          await navigator.clipboard.writeText(text);
+          ok = true;
+        } catch (_) {
+          const t = $("copy-out");
+          t.focus();
+          t.select();
+          try {
+            ok = document.execCommand("copy");
+          } catch (_) {
+            ok = false;
+          }
+        }
+        $("copy-status").textContent = ok
+          ? "복사했습니다. 대화창에 붙여 넣어 주세요."
+          : "복사가 막혔습니다. 위 칸의 글을 직접 복사해 주세요.";
+      };
+
+      /* ---------- 팀 그림: 배치 계산(그림 없이도 동작) ---------- */
+      const stage = $("stage");
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+      let can3d = false;
+      let suppressClick = false;
+      const PI = Math.PI,
+        TAU = PI * 2;
+      const norm = (a) => {
+          const l = Math.hypot(...a);
+          return a.map((x) => x / l);
+        },
+        cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]],
+        dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);
+      function matmul(a, b) {
+        const o = new Float32Array(16);
+        for (let c = 0; c < 4; c++)
+          for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) o[c * 4 + r] += a[k * 4 + r] * b[c * 4 + k];
+        return o;
+      }
+      function ortho(l, r, b, t, n, f) {
+        return new Float32Array([
+          2 / (r - l), 0, 0, 0, 0, 2 / (t - b), 0, 0, 0, 0, -2 / (f - n), 0,
+          -(r + l) / (r - l), -(t + b) / (t - b), -(f + n) / (f - n), 1,
+        ]);
+      }
+      function lookAt(e, t) {
+        const z = norm(e.map((x, i) => x - t[i])),
+          x = norm(cross([0, 1, 0], z)),
+          y = cross(z, x);
+        return new Float32Array([
+          x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot(x, e), -dot(y, e), -dot(z, e), 1,
+        ]);
+      }
+      const apply4 = (m, p) => {
+        const q = [0, 0, 0, 0],
+          a = [...p, 1];
+        for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) q[r] += m[k * 4 + r] * a[k];
+        return q;
+      };
+      // 카메라는 원본과 같은 높이·각도(정면)에 고정하고, 3D 보기에서는 캐릭터가 제자리에서 돈다.
+      const camera = [0, 16, 25],
+        target = [0, 1.8, 0],
+        view = lookAt(camera, target);
+      const L = { vp: null, offsets: [], ww: 0, hh: 0, cols: 6 };
+      function layout() {
+        const r = stage.getBoundingClientRect();
+        L.ww = Math.max(1, r.width);
+        L.hh = Math.max(1, r.height);
+        const wide = L.ww / L.hh >= 1.15;
+        const cols = wide ? 6 : 4,
+          rows = 12 / cols,
+          dz = wide ? 8.6 : 8.2;
+        L.cols = cols;
+        // 직원 순서는 원본 그대로: 앞 번호가 뒷줄.
+        L.offsets = PEOPLE.map((_, i) => [
+          ((i % cols) - (cols - 1) / 2) * 2.36,
+          0,
+          (Math.floor(i / cols) - (rows - 1) / 2) * dz,
+        ]);
+        // 화면 맞춤: 모든 캐릭터의 상자를 보기 공간으로 옮겨 테두리를 잰다(돌려도 잘리지 않게 반경 0.9).
+        let x0 = 1e9,
+          x1 = -1e9,
+          y0 = 1e9,
+          y1 = -1e9;
+        for (const o of L.offsets)
+          for (const dx of [-0.9, 0.9])
+            for (const dy of [-0.15, 3.95])
+              for (const dzz of [-0.9, 0.9]) {
+                const q = apply4(view, [o[0] + dx, o[1] + dy, o[2] + dzz]);
+                x0 = Math.min(x0, q[0]);
+                x1 = Math.max(x1, q[0]);
+                y0 = Math.min(y0, q[1]);
+                y1 = Math.max(y1, q[1]);
+              }
+        const topPad = 34, // 위쪽 상태 글줄
+          botPad = state.three ? 100 : 30, // 이름표, 3D 버튼
+          sidePad = 8;
+        const s = Math.min((L.ww - sidePad * 2) / (x1 - x0), (L.hh - topPad - botPad) / (y1 - y0));
+        const cx = (x0 + x1) / 2,
+          cy = (y0 + y1) / 2 - (botPad - topPad) / 2 / s;
+        const hw = L.ww / s / 2,
+          hh = L.hh / s / 2;
+        L.scale = s;
+        L.vp = matmul(ortho(cx - hw, cx + hw, cy - hh, cy + hh, 0.1, 80), view);
+        placePins();
+      }
+      function toScreen(p) {
+        const q = apply4(L.vp, p);
+        return [((q[0] / q[3]) * 0.5 + 0.5) * L.ww, (1 - ((q[1] / q[3]) * 0.5 + 0.5)) * L.hh];
+      }
+      const pinEls = [];
+      for (const p of PEOPLE) {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "pin";
+        b.dataset.person = p.id;
+        b.setAttribute("aria-label", ariaFor(p));
+        const nm = document.createElement("span");
+        nm.className = "pin-name" + (p.kind === "human" ? " owner" : "");
+        nm.textContent = pinLabel(p);
+        nm.setAttribute("aria-hidden", "true");
+        b.append(nm);
+        li.append(b);
+        $("pins").append(li);
+        pinEls.push(b);
+      }
+      function placePins() {
+        const colPx = 2.36 * L.scale;
+        PEOPLE.forEach((p, i) => {
+          const o = L.offsets[i];
+          const feet = toScreen([o[0], 0, o[2] + 0.35]);
+          const head = toScreen([o[0], 3.9, o[2]]);
+          const b = pinEls[i];
+          const w = Math.max(48, Math.min(colPx * 0.9, 110));
+          const h = Math.max(48, feet[1] - head[1] + 26);
+          b.style.left = feet[0] + "px";
+          b.style.top = feet[1] + 22 + "px";
+          b.style.width = w + "px";
+          b.style.height = h + "px";
+        });
+      }
+      for (const p of PEOPLE) {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "tile" + (p.kind === "human" ? " owner" : "");
+        b.dataset.person = p.id;
+        b.setAttribute("aria-label", ariaFor(p));
+        b.innerHTML = `<span class="face" aria-hidden="true"></span><span class="pin-name" aria-hidden="true"></span>`;
+        b.querySelector(".face").style.setProperty("--skin", p.look.skin);
+        b.querySelector(".face").style.setProperty("--hair", p.look.hair);
+        const nm = b.querySelector(".pin-name");
+        nm.textContent = pinLabel(p);
+        if (p.kind === "human") nm.classList.add("owner");
+        li.append(b);
+        $("tiles").append(li);
+      }
+      function useFallback(reason) {
+        $("pins").hidden = true;
+        $("tiles").hidden = false;
+        $("scene").style.display = "none";
+        $("view3d").hidden = true;
+        $("open3d").hidden = true;
+        $("stage-status").textContent = reason;
+        can3d = false;
+        state.three = false;
+        stage.classList.remove("is-3d");
+      }
+
+      /* ---------- 3D 보기 상태 ---------- */
+      let R3 = null; // 렌더러(그림이 준비되면)
+      let az = 0,
+        azTarget = 0,
+        running = false,
+        visible = true,
+        raf = 0;
+      function setPressed(a) {
+        for (const b of $("view3d").querySelectorAll("[data-az]"))
+          b.setAttribute("aria-pressed", Math.abs(+b.dataset.az - a) < 0.01 ? "true" : "false");
+      }
+      function enter3d(scroll = true) {
+        if (!can3d || state.three) return;
+        state.three = true;
+        stage.classList.add("is-3d");
+        stage.style.touchAction = "pan-y";
+        $("view3d").hidden = false;
+        $("open3d").setAttribute("aria-pressed", "true");
+        $("open3d").textContent = "3D 보는 중";
+        $("stage-status").textContent = "옆으로 끌어서 돌려 보세요";
+        writeHash();
+        layout();
+        if (scroll) stage.scrollIntoView({ block: "nearest" });
+        updateLoop();
+      }
+      function exit3d(focusBack = true) {
+        if (!state.three) return;
+        state.three = false;
+        stage.classList.remove("is-3d");
+        $("view3d").hidden = true;
+        $("open3d").setAttribute("aria-pressed", "false");
+        $("open3d").textContent = "3D로 보기";
+        $("stage-status").textContent = "";
+        az = azTarget = 0;
+        setPressed(0);
+        writeHash();
+        layout();
+        updateLoop();
+        drawStill();
+        if (focusBack) $("open3d").focus();
+      }
+      $("open3d").onclick = () => (state.three ? exit3d() : enter3d());
+      $("close3d").onclick = () => exit3d();
+      for (const b of $("view3d").querySelectorAll("[data-az]"))
+        b.onclick = () => {
+          azTarget = +b.dataset.az;
+          // 가장 가까운 쪽으로 돌기
+          const k = Math.round((az - azTarget) / TAU);
+          azTarget += k * TAU;
+          setPressed(+b.dataset.az);
+        };
+      function updateLoop() {
+        const want = state.three && visible && !document.hidden && !!R3;
+        if (want && !running) {
+          running = true;
+          raf = requestAnimationFrame(loop);
+        } else if (!want && running) {
+          running = false;
+          cancelAnimationFrame(raf);
+        }
+      }
+      function loop(ms) {
+        if (!running) return;
+        if (!dragging) az += (azTarget - az) * 0.12;
+        R3.draw(ms * 0.001, az, true);
+        raf = requestAnimationFrame(loop);
+      }
+      document.addEventListener("visibilitychange", updateLoop);
+      new IntersectionObserver((es) => {
+        visible = es[0].isIntersecting;
+        updateLoop();
+      }).observe(stage);
+      // 끌어서 돌리기
+      let dragging = false,
+        dragX = 0,
+        dragMoved = 0,
+        dragPid = null;
+      stage.addEventListener("pointerdown", (e) => {
+        if (!state.three || e.target.closest(".view3d")) return;
+        dragging = true;
+        dragX = e.clientX;
+        dragMoved = 0;
+        dragPid = e.pointerId;
+      });
+      stage.addEventListener("pointermove", (e) => {
+        if (!dragging || e.pointerId !== dragPid) return;
+        const dx = e.clientX - dragX;
+        dragX = e.clientX;
+        dragMoved += Math.abs(dx);
+        if (dragMoved > 6) {
+          stage.classList.add("dragging");
+          if (!stage.hasPointerCapture(e.pointerId)) stage.setPointerCapture(e.pointerId);
+        }
+        az += dx * 0.012;
+        azTarget = az;
+        setPressed(NaN);
+      });
+      function endDrag(e) {
+        if (!dragging || e.pointerId !== dragPid) return;
+        dragging = false;
+        stage.classList.remove("dragging");
+        if (dragMoved > 6) {
+          suppressClick = true;
+          setTimeout(() => (suppressClick = false), 0);
+        }
+      }
+      stage.addEventListener("pointerup", endDrag);
+      stage.addEventListener("pointercancel", endDrag);
+      stage.addEventListener("keydown", (e) => {
+        if (!state.three) return;
+        if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+          azTarget += e.key === "ArrowLeft" ? -0.4 : 0.4;
+          setPressed(NaN);
+          e.preventDefault();
+        } else if (e.key === "Escape" && !card.open) exit3d();
+      });
+
+      let stillQueued = false;
+      function drawStill() {
+        if (!R3 || state.three || stillQueued) return;
+        stillQueued = true;
+        requestAnimationFrame(() => {
+          stillQueued = false;
+          if (R3 && !state.three) R3.draw(0, 0, false);
+        });
+      }
+      let resizeQ = false;
+      addEventListener("resize", () => {
+        if (resizeQ) return;
+        resizeQ = true;
+        requestAnimationFrame(() => {
+          resizeQ = false;
+          layout();
+          if (R3) R3.resize();
+          drawStill();
+        });
+      });
+
+      /* ---------- 캐릭터 렌더러 (Codex 원본 codex-characters.html에서 가져옴) ----------
+         바뀐 것: 배경·바닥·조명을 다크로, 테두리 빛을 포인트색으로. 형상·외형·순서는 원본 그대로.
+         정지 그림은 한 프레임만 그리고 루프를 돌리지 않는다. */
+      function createRenderer(canvas) {
+        const gl = canvas.getContext("webgl2", { antialias: true, alpha: false, powerPreference: "low-power" });
+        if (!gl) return null;
+        const DATA = PEOPLE;
+        const rgb = (hex) => hex.match(/[a-f\d]{2}/gi).map((v) => Math.pow(parseInt(v, 16) / 255, 2.2));
+        const mix = (a, b, t) => a.map((v, i) => v * (1 - t) + b[i] * t);
+        const C = {
+          top: rgb("#36322f"),
+          pants: rgb("#2f3442"),
+          white: rgb("#fffdf7"),
+          sole: rgb("#e3dfd6"),
+          eye: rgb("#241b19"),
+          mouth: rgb("#774636"),
+          blush: rgb("#edac9b"),
+          frame: rgb("#51483e"),
+        };
+        function program(v, f) {
+          const p = gl.createProgram();
+          for (const [s, src] of [
+            [gl.VERTEX_SHADER, v],
+            [gl.FRAGMENT_SHADER, f],
+          ]) {
+            const sh = gl.createShader(s);
+            gl.shaderSource(sh, src);
+            gl.compileShader(sh);
+            if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw Error(gl.getShaderInfoLog(sh));
+            gl.attachShader(p, sh);
+          }
+          gl.linkProgram(p);
+          if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw Error(gl.getProgramInfoLog(p));
+          return p;
+        }
+        const vs = `#version 300 es
+precision highp float;
+layout(location=0) in vec3 position;layout(location=1) in vec3 normal;layout(location=2) in vec3 color;
+uniform mat4 vp;uniform mat4 lightVP;uniform vec3 offset;uniform float turn;uniform float breath;uniform float blink;uniform float eyePart;
+out vec3 N;out vec3 P;out vec3 col;out vec4 shadow;
+void main(){vec3 q=position;vec3 nn=normal;if(eyePart>0.5){q.y=2.885+(q.y-2.885)*blink;nn=normalize(nn/vec3(1.,max(blink,.04),1.));}q.y+=(q.y>1.25?breath*smoothstep(1.25,2.6,q.y):0.);float c=cos(turn),s=sin(turn);mat3 rot=mat3(c,0.,-s,0.,1.,0.,s,0.,c);P=rot*q+offset;N=rot*nn;col=color;shadow=lightVP*vec4(P,1.);gl_Position=vp*vec4(P,1.);}`;
+        // 다크 판: 바닥은 #191919 쪽으로 사라지고, 반구광을 낮추고, 포인트색 테두리 빛으로 실루엣을 살린다.
+        const fs = `#version 300 es
+precision highp float;
+in vec3 N;in vec3 P;in vec3 col;in vec4 shadow;out vec4 frag;
+uniform sampler2D shadowMap;uniform vec3 camera;uniform vec3 centers[12];uniform float floorPart;uniform float fadeR;
+float shade(){vec3 p=shadow.xyz/shadow.w*.5+.5;float occ=0.;float bias=max(.00035*(1.-dot(normalize(N),normalize(vec3(-.5,1.,.7)))),.00013);for(int x=-1;x<=1;x++)for(int y=-1;y<=1;y++){float z=texture(shadowMap,p.xy+vec2(float(x),float(y))*.0008).r;occ+=p.z-bias>z?1.:0.;}return 1.-occ/9.*.45;}
+void main(){vec3 n=normalize(N),l=normalize(vec3(-.5,1.,.7)),v=normalize(camera-P),h=normalize(l+v);float ndl=max(dot(n,l),0.);float ao=1.;vec3 base=col;vec3 bg=vec3(.0060);
+if(floorPart>.5){for(int i=0;i<12;i++){vec2 d=P.xz-centers[i].xz;ao*=1.-.35*exp(-dot(d,d)/.35);ao*=1.-.12*exp(-dot(d,d)/1.25);}base=vec3(.034,.031,.028);}else{ao=.86+.14*smoothstep(.0,1.2,P.y);}
+vec3 hemi=mix(vec3(.16,.145,.13),vec3(.62,.64,.70),n.y*.5+.5);vec3 lighting=hemi*.58+vec3(1.05,.97,.84)*ndl*.86*shade();float spec=pow(max(dot(n,h),0.),42.)*.12*ndl;
+vec3 rim=vec3(.66,.48,.29)*pow(1.-max(dot(n,v),0.),3.)*.30*(floorPart>.5?0.:1.);
+vec3 outc=base*lighting*ao+vec3(spec)+rim;
+if(floorPart>.5){float r=length(P.xz*vec2(.8,1.));outc=mix(outc,bg,smoothstep(fadeR*.4,fadeR*.85,r));}
+outc=clamp(outc,vec3(0.),vec3(1.));outc=pow(outc,vec3(1./2.2));frag=vec4(outc,1.);}`;
+        const shadowFS = `#version 300 es
+precision highp float;void main(){}`;
+        const main = program(vs, fs),
+          depth = program(vs, shadowFS);
+        function uniforms(p) {
+          const u = {};
+          for (const n of ["vp", "lightVP", "offset", "turn", "breath", "blink", "eyePart", "floorPart", "camera", "centers[0]", "shadowMap", "fadeR"])
+            u[n] = gl.getUniformLocation(p, n);
+          return u;
+        }
+        const U = uniforms(main),
+          D = uniforms(depth);
+        let vertices = [],
+          headShift = 0;
+        function vertex(p, n, c) {
+          vertices.push(p[0], p[1] + headShift, p[2], ...n, ...c);
+        }
+        function ball(p, s, c, rz = 0, rx = 0, seg = 24, rings = 16) {
+          const cr = Math.cos(rz),
+            sr = Math.sin(rz),
+            cx = Math.cos(rx),
+            sx = Math.sin(rx);
+          function rot(v) {
+            const t = [v[0], v[1] * cx - v[2] * sx, v[1] * sx + v[2] * cx];
+            return [t[0] * cr - t[1] * sr, t[0] * sr + t[1] * cr, t[2]];
+          }
+          function point(i, j) {
+            const a = (i / rings) * PI,
+              b = (j / seg) * TAU,
+              unit = [Math.sin(a) * Math.cos(b), Math.cos(a), Math.sin(a) * Math.sin(b)];
+            const q = rot(unit.map((v, k) => v * s[k])),
+              n = norm(rot(unit.map((v, k) => v / s[k])));
+            return [q.map((v, k) => v + p[k]), n];
+          }
+          for (let i = 0; i < rings; i++)
+            for (let j = 0; j < seg; j++) {
+              const a = point(i, j),
+                b = point(i + 1, j),
+                d = point(i, j + 1),
+                e = point(i + 1, j + 1);
+              for (const z of [a, d, b, d, e, b]) vertex(z[0], z[1], c);
+            }
+        }
+        function box(p, s, r, c) {
+          const faceAxes = [
+              [0, 1, 2],
+              [1, 2, 0],
+              [2, 0, 1],
+            ],
+            steps = 8;
+          for (const [a, b, d] of faceAxes)
+            for (const sign of [-1, 1]) {
+              const pt = (i, j) => {
+                const q = [0, 0, 0];
+                q[a] = sign * s[a];
+                q[b] = ((i / steps) * 2 - 1) * s[b];
+                q[d] = ((j / steps) * 2 - 1) * s[d];
+                const core = q.map((v, k) => Math.max(-s[k] + r, Math.min(s[k] - r, v)));
+                const n = norm(q.map((v, k) => v - core[k]));
+                return [core.map((v, k) => p[k] + v + n[k] * r), n];
+              };
+              for (let i = 0; i < steps; i++)
+                for (let j = 0; j < steps; j++) {
+                  const aa = pt(i, j),
+                    bb = pt(i + 1, j),
+                    cc = pt(i, j + 1),
+                    dd = pt(i + 1, j + 1);
+                  for (const z of [aa, bb, cc, bb, dd, cc]) vertex(z[0], z[1], c);
+                }
+            }
+        }
+        function tube(points, r, c, sides = 8) {
+          const frames = [];
+          let prev = null;
+          for (let i = 0; i < points.length; i++) {
+            const a = points[Math.max(0, i - 1)],
+              b = points[Math.min(points.length - 1, i + 1)],
+              w = norm(b.map((x, k) => x - a[k]));
+            let u = prev ? prev.map((x, k) => x - w[k] * dot(prev, w)) : cross(w, Math.abs(w[2]) > 0.9 ? [0, 1, 0] : [0, 0, 1]);
+            if (Math.hypot(...u) < 0.001) u = cross(w, [1, 0, 0]);
+            u = norm(u);
+            frames.push([u, cross(w, u)]);
+            prev = u;
+          }
+          function pt(i, j) {
+            const [u, v] = frames[i],
+              t = (j / sides) * TAU,
+              n = u.map((x, k) => x * Math.cos(t) + v[k] * Math.sin(t));
+            return [points[i].map((x, k) => x + r * n[k]), n];
+          }
+          for (let i = 0; i < points.length - 1; i++)
+            for (let j = 0; j < sides; j++) {
+              const a = pt(i, j),
+                b = pt(i + 1, j),
+                c1 = pt(i, j + 1),
+                d = pt(i + 1, j + 1);
+              for (const z of [a, c1, b, c1, d, b]) vertex(z[0], z[1], c);
+            }
+          ball(points[0], [r, r, r], c, 0, 0, 8, 6);
+          ball(points.at(-1), [r, r, r], c, 0, 0, 8, 6);
+        }
+        function curve(fn, r, c, n = 20) {
+          tube(Array.from({ length: n + 1 }, (_, i) => fn(i / n)), r, c);
+        }
+        function mesh() {
+          const va = gl.createVertexArray();
+          gl.bindVertexArray(va);
+          const b = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, b);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+          for (let i = 0; i < 3; i++) {
+            gl.enableVertexAttribArray(i);
+            gl.vertexAttribPointer(i, 3, gl.FLOAT, false, 36, i * 12);
+          }
+          const m = { va, count: vertices.length / 9 };
+          vertices = [];
+          return m;
+        }
+        const faceSurface = (x, y) => 0.045 + 0.475 * Math.sqrt(Math.max(0.08, 1 - (x / 0.58) ** 2 - ((y - 3.04) / 0.59) ** 2));
+        function facialCurve(fn, r, c, n = 20) {
+          curve(
+            (t) => {
+              const [x, y] = fn(t);
+              return [x, y, faceSurface(x, y) + 0.018];
+            },
+            r,
+            c,
+            n,
+          );
+        }
+        function build(d, index) {
+          const l = d.look,
+            skin = rgb(l.skin),
+            hair = rgb(l.hair),
+            hairHi = mix(hair, rgb("#a88c70"), 0.065),
+            top = d.id === "owner" ? rgb("#cbb08a") : C.top,
+            w = l.body === "big" ? 1.18 : 1,
+            round = l.face === "round" ? 1.07 : 1;
+          for (const side of [-1, 1]) {
+            const x = side * 0.245 * w;
+            box([x, 0.145, 0.095], [0.205, 0.115, 0.325], 0.085, C.sole);
+            box([x, 0.235, 0.09], [0.205, 0.16, 0.315], 0.13, C.white);
+            curve((t) => [x - 0.12 + t * 0.24, 0.322, 0.225], 0.012, C.sole, 6);
+            box([x, 0.71, -0.005], [0.182 * w, 0.46, 0.19], 0.14, C.pants);
+          }
+          box([0, 1.57, 0], [0.485 * w, 0.565, 0.288], 0.23, top);
+          box([0, 1.105, 0], [0.476 * w, 0.083, 0.277], 0.065, mix(top, [0, 0, 0], 0.08));
+          for (const s of [-1, 1]) {
+            ball([s * 0.555 * w, 1.58, 0], [0.205, 0.49, 0.235], top, s * 0.13);
+            box([s * 0.611 * w, 1.215, 0.012], [0.165, 0.105, 0.194], 0.075, mix(top, [0, 0, 0], 0.1));
+            ball([s * 0.62 * w, 1.055, 0.035], [0.145, 0.185, 0.149], skin);
+          }
+          ball([0, 2.16, 0], [0.17, 0.25, 0.16], skin);
+          curve(
+            (t) => {
+              const a = t * TAU;
+              return [0.207 * Math.cos(a), 2.083 - 0.024 * Math.sin(a), 0.175 * Math.sin(a)];
+            },
+            0.037,
+            mix(top, [0, 0, 0], 0.07),
+            36,
+          );
+          headShift = -0.11;
+          ball([0, 3.015, 0], [0.57 * round, 0.6, 0.465], skin, 0, 0, 32, 24);
+          for (const s of [-1, 1]) {
+            ball([s * 0.565 * round, 3.0, 0.005], [0.105, 0.145, 0.107], skin);
+            ball([s * 0.625 * round, 3.005, 0.042], [0.027, 0.065, 0.046], mix(skin, C.blush, 0.34));
+          }
+          (function cap() {
+            const seg = 48,
+              rings = 15;
+            function pt(i, j) {
+              const a = (j / seg) * TAU;
+              const front = Math.max(0, Math.sin(a)),
+                thetaMax = 1.86 - 0.7 * Math.pow(front, 3),
+                t = (i / rings) * thetaMax;
+              const n = [Math.sin(t) * Math.cos(a), Math.cos(t), Math.sin(t) * Math.sin(a)];
+              return [[n[0] * 0.595 * round, 3.045 + n[1] * 0.616, n[2] * 0.492], n];
+            }
+            for (let i = 0; i < rings; i++)
+              for (let j = 0; j < seg; j++) {
+                const a = pt(i, j),
+                  b = pt(i + 1, j),
+                  c = pt(i, j + 1),
+                  d2 = pt(i + 1, j + 1);
+                for (const z of [a, c, b, c, d2, b]) vertex(z[0], z[1], hair);
+              }
+          })();
+          if (["long", "bob", "braid", "ponytail-high", "ponytail-low", "bun"].includes(l.style)) {
+            if (l.style === "bob") {
+              ball([0, 2.92, -0.22], [0.58, 0.64, 0.33], hair);
+              for (const s of [-1, 1]) {
+                ball([s * 0.495, 2.91, -0.005], [0.16, 0.53, 0.28], hair, s * 0.07);
+                curve((t) => [s * (0.56 - 0.02 * Math.sin(t * PI)), 3.32 - t * 0.82, 0.17 - 0.03 * t], 0.013, hairHi);
+              }
+            }
+            if (l.style === "long") {
+              ball([0, 2.66, -0.295], [0.56, 0.85, 0.285], hair);
+              for (const s of [-1, 1])
+                for (let k = 0; k < 3; k++)
+                  curve(
+                    (t) => [
+                      s * (0.47 + k * 0.037 + 0.06 * Math.sin(t * TAU * 1.2 + k * 0.7)),
+                      3.24 - t * 1.15,
+                      -0.1 - k * 0.1 + 0.085 * Math.sin(t * TAU),
+                    ],
+                    0.102 - k * 0.013,
+                    k === 1 ? hairHi : hair,
+                    24,
+                  );
+              for (let k = -2; k <= 2; k++)
+                curve(
+                  (t) => {
+                    const x = k * 0.16 + 0.025 * Math.sin(t * 8 + k),
+                      y = 3.1 - t * 1.1;
+                    return [x, y, -0.301 - 0.285 * Math.sqrt(Math.max(0.04, 1 - (x / 0.56) ** 2 - ((y - 2.66) / 0.85) ** 2))];
+                  },
+                  0.009,
+                  hairHi,
+                );
+            }
+            if (l.style === "bun") {
+              ball([0, 3.55, -0.38], [0.31, 0.29, 0.285], hair);
+              curve(
+                (t) => {
+                  const a = t * TAU;
+                  return [0.255 * Math.cos(a), 3.55 + 0.22 * Math.sin(a), -0.51];
+                },
+                0.017,
+                hairHi,
+                40,
+              );
+              ball([0.04, 3.7, -0.37], [0.16, 0.1, 0.15], hair);
+            }
+            if (l.style === "braid") {
+              ball([0, 3.0, -0.31], [0.52, 0.5, 0.25], hair);
+              for (let k = 0; k < 9; k++) {
+                const yy = 2.98 - k * 0.112,
+                  rr = 0.13 * (1 - k * 0.064);
+                ball([Math.sin((k * PI) / 2) * 0.056, yy, -0.49], [rr, rr * 0.95, 0.105], k % 2 ? hairHi : hair, Math.sin((k * PI) / 2) * 0.6, 0, 16, 12);
+              }
+              ball([0, 1.99, -0.49], [0.07, 0.045, 0.071], rgb("#aa8c6c"));
+              ball([0, 1.89, -0.49], [0.07, 0.11, 0.065], hair);
+            }
+            if (l.style.startsWith("ponytail")) {
+              const high = l.style === "ponytail-high",
+                y = high ? 3.51 : 2.84;
+              ball([0, y, -0.48], [0.145, 0.13, 0.11], rgb("#a68a69"));
+              curve(
+                (t) => [0.08 * Math.sin(t * 3), y + 0.12 * Math.sin(t * PI) - t * (high ? 0.86 : 0.7), -0.54 - 0.22 * Math.sin(t * PI * 0.8)],
+                high ? 0.16 : 0.145,
+                hair,
+                26,
+              );
+              curve((t) => [0.09 + 0.07 * Math.sin(t * 3), y - t * (high ? 0.83 : 0.68), -0.68 - 0.15 * Math.sin(t * PI * 0.8)], 0.014, hairHi);
+            }
+          }
+          if (l.style === "perm" || l.style === "curly") {
+            const tight = l.style === "perm",
+              n = tight ? 48 : 29;
+            for (let k = 0; k < n; k++) {
+              const a = k * 2.399963,
+                y = 0.12 + (0.84 * (k + 0.5)) / n,
+                r = Math.sqrt(1 - y * y),
+                rad = tight ? 0.112 : 0.15;
+              ball([0.565 * r * Math.cos(a), 3.06 + 0.58 * y, 0.48 * r * Math.sin(a)], [rad, rad * 0.9, rad], k % 4 === 0 ? hairHi : hair, 0, 0, 14, 10);
+            }
+            for (let k = 0; k < 7; k++)
+              ball(
+                [-0.45 + k * 0.15, 3.34 + 0.05 * Math.cos(k), 0.367],
+                [tight ? 0.103 : 0.135, tight ? 0.105 : 0.135, 0.115],
+                k % 3 ? hair : hairHi,
+                0,
+                0,
+                16,
+                12,
+              );
+          } else {
+            const sidepart = l.style === "sidepart",
+              n = sidepart ? 5 : 6;
+            for (let k = 0; k < n; k++) {
+              const x = -0.42 + k * 0.165,
+                yy = 3.455 + 0.09 * Math.cos(k * 0.55),
+                tilt = sidepart ? -0.62 : -0.25;
+              ball([x, yy, 0.315], [0.14, sidepart ? 0.235 : 0.17, 0.115], k === 2 ? hairHi : hair, tilt, 0, 20, 14);
+            }
+            for (const s of [-1, 1]) ball([s * 0.538, 3.19, 0.1], [0.068, 0.16, 0.12], hair, s * -0.12);
+          }
+          if (l.style === "short") for (let k = 0; k < 4; k++) ball([-0.2 + k * 0.13, 3.6, 0.02], [0.16, 0.105, 0.19], hair, k * 0.1);
+          for (const s of [-1, 1]) {
+            const x = s * 0.315,
+              y = 2.895;
+            ball([x, y, faceSurface(x, y) + 0.003], [0.104, 0.046, 0.014], mix(skin, C.blush, 0.5), s * 0.1, 0, 20, 12);
+          }
+          ball([0, 2.925, 0.483], [0.052, 0.064, 0.047], mix(skin, rgb("#dfaa8b"), 0.12));
+          for (const s of [-1, 1]) {
+            const x = s * 0.205;
+            facialCurve(
+              (t) => [x - 0.083 + 0.166 * t, 3.185 + 0.025 * Math.sin(t * PI) + (s === -1 ? 0.007 : 0)],
+              l.brow === "thick" ? 0.024 : 0.015,
+              hair,
+              14,
+            );
+          }
+          facialCurve((t) => [(t - 0.5) * 0.205, 2.786 + 0.041 * Math.pow(2 * t - 1, 2)], 0.014, C.mouth, 24);
+          for (const s of [-1, 1]) ball([s * 0.104, 2.827, faceSurface(s * 0.104, 2.827) + 0.018], [0.018, 0.019, 0.014], C.mouth, 0, 0, 10, 8);
+          if (l.acc === "beard") {
+            facialCurve((t) => [(t - 0.5) * 0.4, 2.728 + 0.11 * Math.pow(t * 2 - 1, 2)], 0.045, mix(hair, skin, 0.14), 24);
+            for (const s of [-1, 1]) facialCurve((t) => [s * (0.025 + t * 0.09), 2.872 - 0.017 * t], 0.019, hair, 10);
+          }
+          if (l.acc && l.acc.startsWith("glasses")) {
+            const sq = l.acc === "glasses-square";
+            for (const s of [-1, 1]) {
+              const x = s * 0.206;
+              curve(
+                (t) => {
+                  const a = t * TAU;
+                  let xx, yy;
+                  if (sq) {
+                    xx = Math.sign(Math.cos(a)) * Math.pow(Math.abs(Math.cos(a)), 0.5) * 0.143;
+                    yy = Math.sign(Math.sin(a)) * Math.pow(Math.abs(Math.sin(a)), 0.5) * 0.115;
+                  } else {
+                    xx = Math.cos(a) * 0.142;
+                    yy = Math.sin(a) * 0.136;
+                  }
+                  const y = 3.005 + yy;
+                  return [x + xx, y, faceSurface(x + xx, y) + 0.055];
+                },
+                0.015,
+                C.frame,
+                48,
+              );
+              tube(
+                [
+                  [s * 0.348, 3.04, 0.43],
+                  [s * 0.57, 3.06, 0.02],
+                ],
+                0.014,
+                C.frame,
+              );
+            }
+            curve((t) => [(t - 0.5) * 0.13, 3.023 + 0.015 * Math.sin(t * PI), 0.556], 0.013, C.frame, 12);
+          }
+          const body = mesh();
+          for (const s of [-1, 1]) {
+            const x = s * 0.205,
+              y = 2.995,
+              z = faceSurface(x, y) + 0.022;
+            if (l.wink && s === 1) {
+              facialCurve((t) => [x - 0.063 + 0.126 * t, y + 0.019 * Math.sin(t * PI)], 0.02, C.eye, 18);
+            } else {
+              ball([x, y, z], [0.044, 0.061, 0.022], C.eye, 0, 0, 20, 14);
+              if (l.iris) {
+                ball([x, y - 0.004, z + 0.021], [0.03, 0.04, 0.008], rgb(l.iris), 0, 0, 16, 10);
+                ball([x, y - 0.004, z + 0.028], [0.016, 0.027, 0.006], C.eye, 0, 0, 12, 10);
+              }
+              ball([x - 0.012, y + 0.02, z + 0.022], [0.011, 0.013, 0.006], C.white, 0, 0, 12, 8);
+            }
+            if (l.lash)
+              for (let j = 0; j < 2; j++)
+                facialCurve((t) => [x + s * (0.026 + 0.021 * j + 0.022 * t), y + 0.028 + 0.01 * j + 0.027 * t], 0.008, C.eye, 5);
+          }
+          const eyes = mesh();
+          headShift = 0;
+          return { body, eyes, phase: index * 1.736 };
+        }
+        const chars = DATA.map(build);
+        box([0, -0.07, 0], [80, 0.06, 80], 0.01, rgb("#191919"));
+        const floor = mesh();
+        const SH = 2048,
+          shadowTexture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, shadowTexture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.DEPTH_COMPONENT24, SH, SH, 0, gl.DEPTH_COMPONENT, gl.UNSIGNED_INT, null);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        const fb = gl.createFramebuffer();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, shadowTexture, 0);
+        gl.drawBuffers([gl.NONE]);
+        gl.readBuffer(gl.NONE);
+        if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) throw Error("Shadow framebuffer incomplete");
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        const lightVP = matmul(ortho(-16, 16, -16, 16, 1, 65), lookAt([-15, 30, 21], [0, 0, 0]));
+        gl.enable(gl.DEPTH_TEST);
+        gl.disable(gl.CULL_FACE);
+        const draw = (m) => {
+          gl.bindVertexArray(m.va);
+          gl.drawArrays(gl.TRIANGLES, 0, m.count);
+        };
+        function resize() {
+          const dpr = Math.min(devicePixelRatio || 1, 2);
+          canvas.width = Math.round(L.ww * dpr);
+          canvas.height = Math.round(L.hh * dpr);
+        }
+        resize();
+        let lastShadow = -1,
+          lastTurn = NaN;
+        // t: 초, turn: 캐릭터가 도는 각, animate: 숨쉬기·깜빡임(3D 보기에서만)
+        function frame(t, turn, animate) {
+          const fadeR = Math.max(9, L.cols === 6 ? 15 : 13);
+          for (let pass = 0; pass < 2; pass++) {
+            // 그림자는 돌릴 때만 다시 그린다(원본처럼 65ms 간격 제한).
+            if (pass === 0 && turn === lastTurn) continue;
+            if (pass === 0 && animate && t * 1000 - lastShadow < 65) continue;
+            const u = pass === 0 ? D : U;
+            gl.useProgram(pass === 0 ? depth : main);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, pass === 0 ? fb : null);
+            gl.viewport(0, 0, pass === 0 ? SH : canvas.width, pass === 0 ? SH : canvas.height);
+            if (pass === 0) {
+              gl.clear(gl.DEPTH_BUFFER_BIT);
+              lastShadow = t * 1000;
+              lastTurn = turn;
+            } else {
+              gl.clearColor(0.098, 0.098, 0.098, 1);
+              gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+              gl.activeTexture(gl.TEXTURE0);
+              gl.bindTexture(gl.TEXTURE_2D, shadowTexture);
+              gl.uniform1i(u.shadowMap, 0);
+              gl.uniform3fv(u.camera, camera);
+              gl.uniform3fv(u["centers[0]"], L.offsets.flat());
+              gl.uniform1f(u.fadeR, fadeR);
+            }
+            gl.uniformMatrix4fv(u.vp, false, pass === 0 ? lightVP : L.vp);
+            gl.uniformMatrix4fv(u.lightVP, false, lightVP);
+            if (pass === 1) {
+              gl.uniform3f(u.offset, 0, 0, 0);
+              gl.uniform1f(u.turn, 0);
+              gl.uniform1f(u.breath, 0);
+              gl.uniform1f(u.eyePart, 0);
+              gl.uniform1f(u.floorPart, 1);
+              draw(floor);
+              gl.uniform1f(u.floorPart, 0);
+            }
+            chars.forEach((c, i) => {
+              gl.uniform3fv(u.offset, L.offsets[i]);
+              gl.uniform1f(u.turn, turn);
+              gl.uniform1f(u.breath, animate ? Math.sin(t * 1.85 + c.phase) * 0.012 : 0);
+              gl.uniform1f(u.eyePart, 0);
+              gl.uniform1f(u.blink, 1);
+              draw(c.body);
+              const cycle = (t + c.phase) % 5.7,
+                blink = animate ? 1 - 0.94 * Math.exp(-Math.pow((cycle - 4.95) / 0.075, 2)) : 1;
+              gl.uniform1f(u.eyePart, 1);
+              gl.uniform1f(u.blink, blink);
+              draw(c.eyes);
+            });
+          }
+        }
+        return {
+          gl,
+          draw: frame,
+          resize: () => {
+            resize();
+            lastTurn = NaN;
+          },
+          stats: () => ({ characters: chars.length, vertices: chars.reduce((n, c) => n + c.body.count + c.eyes.count, 0), error: gl.getError() }),
+        };
+      }
+
+      /* ---------- 시작 ---------- */
+      layout();
+      const hasGL2 = (() => {
+        if (forceNoGL) return false;
+        try {
+          return !!document.createElement("canvas").getContext("webgl2");
+        } catch (_) {
+          return false;
+        }
+      })();
+      if (!hasGL2) {
+        useFallback(forceNoGL ? "그림 없이 보기(#nogl)" : "이 브라우저는 3D 그림을 지원하지 않아 이름으로 보여 드려요");
+        applyHash();
+      } else {
+        $("stage-status").textContent = "그림을 그리는 중…";
+        if (reduced.matches) $("open3d").hidden = true;
+        can3d = !reduced.matches;
+        // 글이 먼저 보이도록 그림은 첫 화면이 그려진 다음에 만든다.
+        requestAnimationFrame(() =>
+          setTimeout(() => {
+            try {
+              R3 = createRenderer($("scene"));
+              if (!R3) throw Error("no webgl2");
+              $("scene").addEventListener("webglcontextlost", (e) => {
+                e.preventDefault();
+                R3 = null;
+                updateLoop();
+                useFallback("그림을 그릴 수 없어 이름으로 보여 드려요");
+              });
+              $("stage-status").textContent = reduced.matches ? "동작 줄이기 설정이라 정지 그림만 보여 드려요" : "";
+              if (state.three) {
+                $("stage-status").textContent = "옆으로 끌어서 돌려 보세요";
+                updateLoop();
+              } else R3.draw(0, 0, false);
+              window.__site = { stats: () => R3 && R3.stats(), state };
+            } catch (err) {
+              R3 = null;
+              useFallback("그림을 그릴 수 없어 이름으로 보여 드려요");
+            }
+            applyHash();
+          }, 0),
+        );
+        // 해시로 바로 여는 카드·목록은 그림을 기다리지 않는다.
+        const h = parseHash();
+        if (h.card || h.list || h.review) applyHash();
+      }
+    </script>
+  </body>
+</html>

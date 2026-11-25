@@ -1,0 +1,238 @@
+{
+  "sample": true,
+  "version": 1,
+  "asOf": "2026-11-25",
+  "source": "샘플 데이터 · 판 1 · 직원 명단은 운영 앱 목업(staff), 외형은 Codex 캐릭터 원본",
+  "site": {
+    "logo": "영재단",
+    "logoMark": "✦",
+    "subtitle": "YOUNGJAEDAN",
+    "philosophy": "제한된 자원으로 좋은 팀을 구성하고 운영하는 회사",
+    "teamLine": "대표 1명과 AI 직원 11명"
+  },
+  "github": {
+    "org": "YOUNGJAEDAN",
+    "label": "GitHub에서 보기"
+  },
+  "people": [
+    {
+      "id": "s-cos",
+      "name": "서연",
+      "role": "인사·접수",
+      "kind": "ai",
+      "does": "대표의 업무 지시를 받아 질문·작은 변경·새 기능으로 나눕니다.",
+      "look": {
+        "hair": "#2b1d16",
+        "style": "bun",
+        "skin": "#f2d4bf",
+        "lash": true
+      }
+    },
+    {
+      "id": "s-fin",
+      "name": "수현",
+      "role": "총무",
+      "kind": "ai",
+      "does": "구독 사용량과 비용 기록을 모아 정리합니다.",
+      "look": {
+        "hair": "#3b2a20",
+        "style": "perm",
+        "skin": "#edc9ad",
+        "face": "round"
+      }
+    },
+    {
+      "id": "s-plan",
+      "name": "지우",
+      "role": "기획자",
+      "kind": "ai",
+      "does": "아이디어 단계에서 대표와 이야기하고 기획 메모 한 장으로 정리합니다.",
+      "look": {
+        "hair": "#2a1f1a",
+        "style": "bob",
+        "skin": "#f0d0b8",
+        "lash": true
+      }
+    },
+    {
+      "id": "s-design",
+      "name": "예린",
+      "role": "프로덕트 디자이너",
+      "kind": "ai",
+      "does": "눌러 볼 수 있는 화면 판을 만들어 대표와 방향을 정합니다.",
+      "look": {
+        "hair": "#6b3f2a",
+        "style": "long",
+        "skin": "#f3d6c2",
+        "lash": true,
+        "wink": true
+      }
+    },
+    {
+      "id": "s-lead",
+      "name": "태오",
+      "role": "테크 리드",
+      "kind": "ai",
+      "does": "확정된 화면을 빌더가 맡을 개발 카드 묶음으로 나눕니다.",
+      "look": {
+        "hair": "#151515",
+        "style": "short",
+        "skin": "#e3bd9d",
+        "acc": "beard",
+        "brow": "thick"
+      }
+    },
+    {
+      "id": "s-b1",
+      "name": "도윤",
+      "role": "빌더",
+      "kind": "ai",
+      "does": "개발 카드를 한 장씩 맡아 코드를 쓰고 PR을 올립니다.",
+      "look": {
+        "hair": "#5a3a24",
+        "style": "curly",
+        "skin": "#e6c3a3",
+        "acc": "glasses-round",
+        "brow": "thick"
+      }
+    },
+    {
+      "id": "s-b2",
+      "name": "이안",
+      "role": "빌더",
+      "kind": "ai",
+      "does": "개발 카드를 한 장씩 맡아 코드를 쓰고 PR을 올립니다.",
+      "look": {
+        "hair": "#2a1d16",
+        "style": "ponytail-low",
+        "skin": "#c99872",
+        "body": "big",
+        "brow": "thick"
+      }
+    },
+    {
+      "id": "s-b3",
+      "name": "하린",
+      "role": "빌더",
+      "kind": "ai",
+      "does": "개발 카드를 한 장씩 맡아 코드를 쓰고 PR을 올립니다.",
+      "look": {
+        "hair": "#161210",
+        "style": "braid",
+        "skin": "#f2d2bb",
+        "lash": true
+      }
+    },
+    {
+      "id": "s-ops",
+      "name": "건우",
+      "role": "데브옵스",
+      "kind": "ai",
+      "does": "인프라와 배포·되돌리기를 맡습니다.",
+      "look": {
+        "hair": "#d9b46a",
+        "style": "sidepart",
+        "skin": "#ecc9ab",
+        "iris": "#3f5a6b"
+      }
+    },
+    {
+      "id": "s-verify",
+      "name": "민재",
+      "role": "검증",
+      "kind": "ai",
+      "does": "올라온 PR을 검토하고 CI 결과로 확인합니다.",
+      "look": {
+        "hair": "#1d1714",
+        "style": "sidepart",
+        "skin": "#e6c2a3",
+        "acc": "glasses-square"
+      }
+    },
+    {
+      "id": "s-sec",
+      "name": "유나",
+      "role": "보안",
+      "kind": "ai",
+      "does": "위험할 수 있는 변경을 보안 관점에서 검토합니다.",
+      "look": {
+        "hair": "#2a1c15",
+        "style": "ponytail-high",
+        "skin": "#c58f6b",
+        "lash": true
+      }
+    },
+    {
+      "id": "owner",
+      "name": "대표",
+      "role": "운영자",
+      "kind": "human",
+      "does": "방향을 정하고 결재 세 번을 합니다. 나머지는 AI 직원이 합니다.",
+      "look": {
+        "hair": "#1b1714",
+        "style": "sidepart",
+        "skin": "#efcdb3",
+        "brow": "thick"
+      }
+    }
+  ],
+  "howWeWork": {
+    "title": "어떻게 일하나",
+    "lines": [
+      "대표가 아이디어를 말하면 AI 직원들이 기획부터 검토까지 이어 갑니다.",
+      "대표는 결재를 세 번만 합니다.",
+      "결재 사이의 일은 AI 직원들이 문서로 주고받으며 진행합니다."
+    ],
+    "approvals": [
+      {
+        "n": 1,
+        "name": "프로토타입 확정",
+        "what": "눌러 본 화면으로 방향을 정합니다"
+      },
+      {
+        "n": 2,
+        "name": "카드 묶음",
+        "what": "개발 카드로 나눈 작업을 승인합니다"
+      },
+      {
+        "n": 3,
+        "name": "결과 확인",
+        "what": "검토를 마친 결과를 확인합니다"
+      }
+    ]
+  },
+  "projects": [],
+  "projectsEmpty": "만드는 중",
+  "projectsEmptyNote": "공개 레포가 생기면 여기에 적습니다.",
+  "review": {
+    "feature": "영재단 소개 페이지",
+    "version": 1,
+    "changes": [
+      "첫 판: 기획 메모(2026-11-25) 기준으로 처음 만들었습니다.",
+      "첫 화면은 정지 그림, 3D는 버튼을 눌렀을 때만 그립니다.",
+      "직원 \"하는 일\" 한 줄은 초안입니다. 고쳐 주세요."
+    ],
+    "points": [
+      {
+        "id": "p1",
+        "text": "첫 화면(로고·철학·12명·GitHub 버튼)이 폰에서 한눈에 들어오나"
+      },
+      {
+        "id": "p2",
+        "text": "정지 그림 + \"3D로 보기\" 방식과 3D 조작감"
+      },
+      {
+        "id": "p3",
+        "text": "대표 표시(✦, 운영자 · 사람)와 \"AI 직원\" 표시"
+      },
+      {
+        "id": "p4",
+        "text": "직원 \"하는 일\" 한 줄 문구(초안)"
+      },
+      {
+        "id": "p5",
+        "text": "\"어떻게 일하나\" 설명의 길이와 말투"
+      }
+    ]
+  }
+}
